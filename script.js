@@ -4,7 +4,8 @@ let favbtn = document.getElementById("favourites-btn");
 let catbtn = document.getElementById("categories-btn");
 let input = document.getElementById("search-input");
 
-let catCard = `<div class="card m-2 " style="width: 18rem;">
+// category card
+let catCard = `<div class="card m-2" style="width: 18rem;">
       <img src="image" class="card-img-top" alt="name">
       <div class="card-body">
         <h5 class="card-title">name</h5>
@@ -13,6 +14,7 @@ let catCard = `<div class="card m-2 " style="width: 18rem;">
       </div>
     </div>`;
 
+// meal card
 let mealCard = `<div class="card m-2" style="width: 18rem;">
     <img src="image" class="card-img-top" alt="name">
     <div class="card-body">
@@ -23,17 +25,25 @@ let mealCard = `<div class="card m-2" style="width: 18rem;">
     </div>
   </div>`;
 
+// reading favourites from local storage
+// favourites is an array of meal IDs
 let favourites = JSON.parse(localStorage.getItem("favourites"));
 if (favourites == null) favourites = [];
 
+// function to display facourite meals
 function fav() {
+  // changing active tab in navbar
   favbtn.classList.add("active");
   catbtn.classList.remove("active");
+
+  // reading favourites
   favourites = JSON.parse(localStorage.getItem("favourites"));
   if (favourites == null || favourites.length == 0) {
     document.getElementById("container").innerHTML = `<h1>No favourites</h1>`;
     return;
   }
+
+  // getting meal details from API
   let html = "";
   for (let i = 0; i < favourites.length; i++) {
     let xhrRequest = new XMLHttpRequest();
@@ -57,6 +67,7 @@ function fav() {
   }
 }
 
+// function to dislay
 function categories() {
   favbtn.classList.remove("active");
   catbtn.classList.add("active");
@@ -94,6 +105,8 @@ categories();
 
 favbtn.addEventListener("click", fav);
 catbtn.addEventListener("click", categories);
+
+// adding search suggestionsm when user types in search box
 input.addEventListener("input", (e) => {
   document.getElementById("search-suggestions").innerHTML = "";
   if (e.target.value == "") return;
@@ -122,6 +135,7 @@ input.addEventListener("input", (e) => {
   xhrRequest.send();
 });
 
+// show details page for a particular meal
 function showDetails(id) {
   let xhrRequest = new XMLHttpRequest();
   xhrRequest.onload = function () {
@@ -208,6 +222,7 @@ function showDetails(id) {
   xhrRequest.send();
 }
 
+// get meals from a particular category from API
 function getMealsInCategory(category) {
   let xhrRequest = new XMLHttpRequest();
   xhrRequest.onload = function () {
@@ -245,6 +260,7 @@ function getMealsInCategory(category) {
   xhrRequest.send();
 }
 
+// Add to favourites
 function addToFavourites(e) {
   e.stopPropagation();
   if (favourites == null) favourites = [];
@@ -252,6 +268,7 @@ function addToFavourites(e) {
   localStorage.setItem("favourites", JSON.stringify(favourites));
 }
 
+// remove form favourites
 function removeFromFavourites(id) {
   for (let i = 0; i < favourites.length; i++) {
     if (favourites[i] == id) {
