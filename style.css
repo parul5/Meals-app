@@ -1,0 +1,33 @@
+#search-form {
+  position: relative;
+}
+
+#search-suggestions {
+  position: absolute;
+  top: calc(100% + 10px);
+  background-color: white;
+  box-shadow: 0px 0px 9px 1px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  z-index: 1;
+}
+
+#search-suggestions p {
+  margin: 0px auto;
+  height: 2rem;
+}
+
+.suggestion:hover {
+  background-color: rgb(189, 189, 189);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  #search-suggestions {
+    max-height: calc(105% * 8);
+    overflow: scroll;
+  }
+
+  #search-suggestions::--webkit-scrollbar {
+    display: none;
+  }
+}
