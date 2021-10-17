@@ -30,7 +30,7 @@ function fav() {
   favbtn.classList.add("active");
   catbtn.classList.remove("active");
   favourites = JSON.parse(localStorage.getItem("favourites"));
-  if (favourites.length == 0) {
+  if (favourites == null || favourites.length == 0) {
     document.getElementById("container").innerHTML = `<h1>No favourites</h1>`;
     return;
   }
